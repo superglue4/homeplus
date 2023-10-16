@@ -7,7 +7,7 @@ app = FastAPI()
 
 async def welcome() -> dict:
     return {
-        "message" : "강가람 안녕!"
+        "message" : "환영 합니다.!"
     }
 
 app.include_router(coupon_router)
