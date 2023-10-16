@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from router.coupon import coupon_router
 
 app = FastAPI()
 
@@ -6,10 +7,10 @@ app = FastAPI()
 
 async def welcome() -> dict:
     return {
-        "message" : "강가람 안녕 !"
+        "message" : "강가람 안녕!"
     }
 
-
+app.include_router(coupon_router)
 
 
 
