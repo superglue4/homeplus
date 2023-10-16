@@ -1,12 +1,12 @@
 from fastapi import APIRouter
-
+from models.coupon import Coupon
 coupon_router = APIRouter()
 
 coupon_list = []
 
 
 @coupon_router.post("/coupon")
-async def post_coupon(coupon: dict) -> dict:
+async def post_coupon(coupon: Coupon) -> dict:
     coupon_list.append(coupon)
     return {
         "message": "쿠폰 추가 완료!"
