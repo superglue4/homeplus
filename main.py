@@ -6,7 +6,7 @@ app = FastAPI()
 
 async def welcome() -> dict:
     return {
-        "message" : "안녕 !"
+        "message" : "강가람 안녕 !"
     }
 
 
