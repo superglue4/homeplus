@@ -15,7 +15,7 @@ templates = Jinja2Templates(directory="templates/")
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 IMG_DIR = os.path.join(BASE_DIR, "images/")
-IMG_URL = os.path.join("http://127.0.0.1:8000/","images/")
+IMG_URL = os.path.join("https://homeplus-rdfgx.run.goorm.site/","images/")
 
 
 
