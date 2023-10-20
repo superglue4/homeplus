@@ -5,11 +5,24 @@ from fastapi import APIRouter, Request, Depends, File, UploadFile, Form
 from fastapi.templating import Jinja2Templates
 from starlette.responses import FileResponse
 from starlette.templating import _TemplateResponse
+from models.coupon import Homeplus
+from database.database import engineconn
 
-from models.coupon import Coupon
+engine = engineconn()
+session = engine.sessionmaker()
+
+
 coupon_router = APIRouter()
 
+
 coupon_list = []
+for row in session.query(Homeplus).all():
+    coupon_list.append({
+        "coupon_no": row.no,
+        "coupon_exp": row.exp,
+        "coupon_img": "",
+        "coupon_url": row.img
+    })
 
 templates = Jinja2Templates(directory="templates/")
 
