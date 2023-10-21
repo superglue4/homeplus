@@ -14,17 +14,6 @@ session = engine.sessionmaker()
 
 coupon_router = APIRouter()
 
-coupon_list = []
-
-stmt = select(Coupon).where(Coupon.use == "N")
-
-
-for row in session.execute(stmt):
-    coupon_list.append({
-        "coupon_no": row.Coupon.no,
-        "coupon_exp": row.Coupon.exp,
-        "coupon_url": row.Coupon.img
-    })
 
 templates = Jinja2Templates(directory="templates/")
 
@@ -40,11 +29,7 @@ async def post_coupon(coupon_no: Annotated[str, Form()], coupon_exp: Annotated[s
         shutil.copyfileobj(coupon_img.file, buffer)
     # 변수 저장
     IMG_URL = os.environ['IMG_URL']
-    coupon_list.append({
-        "coupon_no": coupon_no,
-        "coupon_exp": coupon_exp,
-        "coupon_url": f"{IMG_URL}{coupon_img.filename}",
-    })
+
     # db 입력
     print(session.execute(insert(Coupon), [
         {"no": coupon_no, "use": "N", "month": "202310", "exp": coupon_exp, "img": f"/images/{coupon_img.filename}"}
@@ -65,10 +50,17 @@ async def put_coupon(no: str):
 
 @coupon_router.get("/coupon")
 async def get_coupon(request: Request) -> _TemplateResponse:
+    coupon_list = []
+    stmt = select(Coupon).where(Coupon.use == "N")
+    for row in session.execute(stmt):
+        coupon_list.append({
+            "coupon_no": row.Coupon.no,
+            "coupon_exp": row.Coupon.exp,
+            "coupon_url": row.Coupon.img
+        })
     return templates.TemplateResponse("index.html", {
         "request": request,
         "coupon_list": coupon_list
-
     })
 
 
