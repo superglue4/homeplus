@@ -38,7 +38,7 @@
                     console.log(jqXHR.responseJSON);
                 });
             });
-            $('#inputUse').on('click',function() {
+            $('.inputUse').on('click',function() {
                 const coupon_no = $(this).data("no");
                 if (!confirm("사용 완료?")) {
                     return false;
@@ -64,7 +64,7 @@
       <div class="card-body">
         <h5 class="card-title">쿠폰</h5>
         <p class="card-text">쿠폰 번호 : {{ coupon.coupon_no }}<br>사용일 : {{ coupon.coupon_exp }}</p>
-        <a class="btn btn-primary" id="inputUse" data-no="{{ coupon.coupon_no }}">사용</a>
+        <a class="btn btn-primary inputUse" data-no="{{ coupon.coupon_no }}">사용</a>
       </div>
     </div>
     {% endfor %}
