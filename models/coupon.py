@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from sqlalchemy import Column, TEXT, INT, BIGINT, VARCHAR, CHAR, DATE, DATETIME
 from sqlalchemy.orm import declarative_base
 
@@ -16,7 +18,7 @@ from sqlalchemy.orm import declarative_base
 Base = declarative_base()
 
 
-class Homeplus(Base):
+class Coupon(Base):
     __tablename__ = "coupon"
     id = Column(INT, nullable=False, autoincrement=True, primary_key=True)
     no = Column(VARCHAR, nullable=False)
@@ -24,4 +26,4 @@ class Homeplus(Base):
     month = Column(CHAR, nullable=False)
     exp = Column(DATE, nullable=False)
     img = Column(VARCHAR, nullable=False)
-    reg = Column(DATETIME, nullable=False)
+    reg = Column(DATETIME, nullable=False, default=datetime.now)
