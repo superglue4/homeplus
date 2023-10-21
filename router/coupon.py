@@ -7,7 +7,7 @@ from starlette.responses import FileResponse
 from starlette.templating import _TemplateResponse
 from models.coupon import Coupon
 from database.database import engineconn
-from sqlalchemy import insert, update, bindparam
+from sqlalchemy import insert, update, select
 
 engine = engineconn()
 session = engine.sessionmaker()
@@ -15,11 +15,15 @@ session = engine.sessionmaker()
 coupon_router = APIRouter()
 
 coupon_list = []
-for row in session.query(Coupon).all():
+
+stmt = select(Coupon).where(Coupon.use == "N")
+
+
+for row in session.execute(stmt):
     coupon_list.append({
-        "coupon_no": row.no,
-        "coupon_exp": row.exp,
-        "coupon_url": row.img
+        "coupon_no": row.Coupon.no,
+        "coupon_exp": row.Coupon.exp,
+        "coupon_url": row.Coupon.img
     })
 
 templates = Jinja2Templates(directory="templates/")

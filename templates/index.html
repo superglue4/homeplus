@@ -40,6 +40,9 @@
             });
             $('#inputUse').on('click',function() {
                 const coupon_no = $(this).data("no");
+                if (!confirm("사용 완료?")) {
+                    return false;
+                }
                 $.ajax({
                     url: "/coupon/" + coupon_no,
                     method: "PUT",
