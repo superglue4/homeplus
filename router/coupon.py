@@ -35,7 +35,7 @@ async def post_coupon(coupon_no: Annotated[str, Form()], coupon_exp: Annotated[s
         {"no": coupon_no, "use": "N", "month": "202310", "exp": coupon_exp, "img": f"/images/{coupon_img.filename}"}
     ]))
 
-    session.commit()
+    # session.commit()
 
     return {"status": 200}
 
@@ -43,7 +43,7 @@ async def post_coupon(coupon_no: Annotated[str, Form()], coupon_exp: Annotated[s
 @coupon_router.put("/coupon/{no}")
 async def put_coupon(no: str):
     session.execute(update(Coupon).where(Coupon.no == no).values(use="Y"))
-    session.commit()
+    # session.commit()
 
     return {"status": 200}
 
@@ -58,6 +58,8 @@ async def get_coupon(request: Request) -> _TemplateResponse:
             "coupon_exp": row.Coupon.exp,
             "coupon_url": row.Coupon.img
         })
+
+        # session.commit()
     return templates.TemplateResponse("index.html", {
         "request": request,
         "coupon_list": coupon_list

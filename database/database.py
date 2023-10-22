@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-conn_string = "mysql+pymysql://homeplus:homeplus1234@3.34.220.143:59475/homeplus"
+conn_string = "mysql+pymysql://homeplus:homeplus1234@3.34.220.143:59475/homeplus?autocommit=true"
 
 class engineconn:
     def __init__(self):
