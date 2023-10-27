@@ -8,8 +8,12 @@ from starlette.templating import _TemplateResponse
 from models.coupon import Coupon
 from database.database import engineconn
 from sqlalchemy import insert, update, select
+from dotenv import load_dotenv
 
-engine = engineconn()
+ROOT_DIR = os.path.abspath(os.curdir)
+load_dotenv(os.path.join(ROOT_DIR, ".env"))
+
+engine = engineconn(os.environ['DB'])
 session = engine.sessionmaker()
 
 coupon_router = APIRouter()
