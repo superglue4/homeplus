@@ -8,12 +8,12 @@ from starlette.templating import _TemplateResponse
 from models.coupon import Coupon
 from database.database import engineconn
 from sqlalchemy import insert, update, select
-from dotenv import load_dotenv
+from config import Settings
 
-ROOT_DIR = os.path.abspath(os.curdir)
-load_dotenv(os.path.join(ROOT_DIR, ".env"))
+settings = Settings()
 
-engine = engineconn(os.environ['DB'])
+
+engine = engineconn(settings.db)
 session = engine.sessionmaker()
 
 coupon_router = APIRouter()
@@ -27,12 +27,10 @@ IMG_DIR = os.path.join(BASE_DIR, "images/")
 
 @coupon_router.post("/coupon")
 async def post_coupon(coupon_no: Annotated[str, Form()], coupon_exp: Annotated[str, Form()], coupon_img: UploadFile):
-    local_path = os.path.join(IMG_DIR, coupon_img.filename)
+    local_path = os.path.join(settings.img_url, coupon_img.filename)
     # 파일 저장
     with open(local_path, "wb") as buffer:
         shutil.copyfileobj(coupon_img.file, buffer)
-    # 변수 저장
-    IMG_URL = os.environ['IMG_URL']
 
     # db 입력
     print(session.execute(insert(Coupon), [
